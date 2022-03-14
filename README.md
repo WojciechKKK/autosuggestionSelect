@@ -1,11 +1,5 @@
 ## AutosuggestionSelect
 
-#### Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [How to run](#how-to-run)
-* [Prod version](#prod-versionn)
-
 #### General info
 Application is used for search universities. 
 	
@@ -18,10 +12,10 @@ Project is created with:
 #### How to run?
 ```
 $ npm i
-$ npm start
+$ npm run start
 ```
 
 #### Production version
 To run this project, use below link:
 
-https://wojciechkkk.pl/chat/index.html
+https://autosuggestionselect.netlify.app/
