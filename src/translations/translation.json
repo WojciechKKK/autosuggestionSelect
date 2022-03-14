@@ -1,0 +1,8 @@
+{
+  "title": "Universities",
+  "buttonReset": "Reset",
+  "inputError": "Min 3 characters",
+  "inputPlaceholder": "Type university...",
+  "failedFetch": "Failed API fetch",
+  "notFound": "not found :("
+}

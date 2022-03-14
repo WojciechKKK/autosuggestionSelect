@@ -1,0 +1,73 @@
+body {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  /* display: flex;
+  position: absolute;
+  top: 50px;
+  left: 50px */
+}
+
+:root {
+
+  --button-width: 170px;
+  --dropdown-height: 50vh;
+  --global-border-radius: 10px;
+  --font-weight-bold: 600;
+
+  /* dropdown header */
+  --dropdown-border-width: 2px;
+  --dropdown-width: calc(var(--button-width) * 2);
+  --dropdown-border: var(--dropdown-border-width) solid black;
+  --dropdown-padding: 3px 7px;
+  --padding-dropdown-elements: 2px 5px;
+  --dropdown-box-shadow: 0 0 10px grey;
+
+  --dropdown-padding-element: 15px;
+  --dropdown-border-element: 1px solid grey;
+
+  /* search input */
+  --input-padding: 10px;
+  --input-border-width: 2px;
+  --input-border-radius: 3px;
+  --input-font-size: 15px;
+  --input-border: var(--input-border-width) solid rgba(0, 0, 0, 0.575);
+  --input-border-focus: var(--input-border-width) solid rgb(0, 0, 0);
+
+
+  /* button reset */
+  --button-font-size: 15px;
+  --button-padding: 15px;
+
+
+  /* colors */
+  --background-color: #fff;
+  --text-color: #000;
+  --text-color-white: #fff;
+  --input-placeholder: grey;
+  --dropdown-background-hover: #f9f9f9;
+  --button-background-color: #000;
+  --button-background-color-hover: rgb(49, 49, 49);
+  --button-text-color: #fff;
+  --icon-delete-color: #000;
+  --icon-spinner-color: green;
+  --university-text-hover: green;
+
+
+  /* icons */
+  --icon-padding: 0 10px;
+  --icon-font-size: 20px;
+  --icon-error-color: red;
+
+  /* error */
+  --error-font-size: 10px;
+  
+
+
+}
