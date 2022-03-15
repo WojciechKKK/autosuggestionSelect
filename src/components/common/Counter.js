@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import '../../App.css';
 
-const Counter = styled.a`
+const Counter = styled.p`
+  display: inline;
   padding: var(--padding-dropdown-elements);
   margin: 0 5px;
   background: var(--text-color);

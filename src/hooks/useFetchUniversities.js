@@ -1,16 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {prepareUniversistiesData} from '../utils/prepareUniversistiesData';
 import translations from '../translations/translation.json';
+import { MIN_INPUT_TEXT_LENGTH, UNIVERSITIES_API_NAME}  from '../consts/constsVariables';
 
-const MIN_INPUT_TEXT_LENGTH = 3;
-const UNIVERSITIES_API_NAME = "http://universities.hipolabs.com/search?name=";
-
-export const useFetchUniversities = (userList, setApiList, inputValue) => {
+export const useFetchUniversities = (setApiList) => {
   const [visibleError, setVisibleError] = useState(false);
-  const [universities, setUniversities] = useState([]);
   const [ loader, setLoader] = useState(false);
 
-  async function getApiData(){
+  const checkValidation = (inputValue, userList) => {
+    if(inputValue.length > MIN_INPUT_TEXT_LENGTH){
+      setVisibleError(false);
+      getApiData(inputValue, userList)
+    } else {
+      if(inputValue === '') {
+        setVisibleError(false);
+      } else {
+        setVisibleError(true);
+      }
+    setApiList([]);
+    }
+  };
+
+  async function getApiData(inputValue, userList){
     setLoader(true)
     try {
       const response = await fetch(`${UNIVERSITIES_API_NAME}${inputValue}`);
@@ -18,7 +29,7 @@ export const useFetchUniversities = (userList, setApiList, inputValue) => {
       if(!data.length){
         alert(`'${inputValue}' ${translations.notFound}`)
       } else {
-        setUniversities(prepareUniversistiesData(data, userList))
+        setApiList(prepareUniversistiesData(data, userList))
       }
     } catch(err){
       console.error(translations.failedFetch, err)
@@ -27,20 +38,5 @@ export const useFetchUniversities = (userList, setApiList, inputValue) => {
     }
   }
 
-  useEffect(() => {
-    if(inputValue.length > MIN_INPUT_TEXT_LENGTH){
-      setVisibleError(false);
-      getApiData();
-    }  else {
-      if(inputValue === '') {
-        setVisibleError(false);
-      } else {
-        setVisibleError(true);
-      }
-    setApiList([]);
-  }
-  // eslint-disable-next-line 
-  }, [inputValue]);
-
-  return { universities, loader, visibleError }
+  return { checkValidation, loader, visibleError }
 }

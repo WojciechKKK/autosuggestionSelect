@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import '../../App.css'
@@ -10,6 +10,8 @@ import removeObjDuplicationInArray from '../../utils/removeDuplicateObjInArray';
 import toggleUniversityStatus from '../../utils/toggleUniversityStatus';
 import compareUserListWithChoosen from '../../utils/compareUserListWithChoosen';
 import {useFetchUniversities }from '../../hooks/useFetchUniversities';
+import { debounce } from "lodash";
+import { MAX_RESPONSE_TIME } from '../../consts/constsVariables';
 
 const DropdownStyled = styled.div`
   border-radius: var(--global-border-radius);
@@ -22,11 +24,18 @@ const DropdownStyled = styled.div`
     transform: scale(1);
   `}
 ` 
+
 const Dropdown = ({isVisible, fnSetCounter}) => {
   const [ inputValue, setInputValue] = useState('');
   const [ userList, setUserList] = useState([]);
   const [apiList, setApiList] = useState([]);
-  const {universities, loader, visibleError} = useFetchUniversities(userList, setApiList, inputValue);
+  const {checkValidation, loader, visibleError} = useFetchUniversities(setApiList);
+  const debounceOnChange = useCallback(debounce(checkValidation, MAX_RESPONSE_TIME),[]);
+
+  const setValueWithDebounce = (value) => {
+    setInputValue(value);
+    debounceOnChange(value, userList)
+  }
 
   const resetList = () => {
     setApiList([]);
@@ -35,12 +44,11 @@ const Dropdown = ({isVisible, fnSetCounter}) => {
     console.log("Update", []);
   }
 
-  const clearInputData = () => setInputValue('');
-
-  useEffect(() => {
-    setApiList(universities)
-  }, [universities]);
-
+  const clearInputData = () => {
+    setInputValue('');
+    setApiList([]);
+  }
+  
   const addToUserList = universityDetails => {
     if(!apiList.length){
       const getUserData = getUserList(userList, universityDetails.name);
@@ -60,7 +68,7 @@ const Dropdown = ({isVisible, fnSetCounter}) => {
     }
   };
 
-  // for hide components
+  // for hide components - remove transform: scale(0);
   // if(!isVisible) {
   //   return null;
   // };
@@ -69,7 +77,7 @@ const Dropdown = ({isVisible, fnSetCounter}) => {
     <DropdownStyled isVisible={isVisible}>
       <SearchInput 
         value={inputValue} 
-        fnOnChange={setInputValue} 
+        fnOnChange={setValueWithDebounce} 
         visibleError={visibleError} 
         loader={loader} 
         fnClearInput={clearInputData}
