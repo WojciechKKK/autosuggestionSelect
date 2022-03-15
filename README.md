@@ -14,8 +14,3 @@ Project is created with:
 $ npm i
 $ npm run start
 ```
-
-#### Production version
-To run this project, use below link:
-
-https://autosuggestionselect.netlify.app/
